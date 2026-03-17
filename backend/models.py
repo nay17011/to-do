@@ -31,6 +31,22 @@ class Schema:
         """
         self.conn.execute(query)
 
-    if __name__=='__main__':
-        Schema()
-        app.run(debug=True)
+class ToDoModel:
+    TABLENAME = "Todo"
+    def __init__(self):
+        self.conn=sqlite3.connect('todo.db')
+    def create(self,text,description):
+        query = f'insert into {self.TABLENAME} '\
+                f'(Title, Description) '\
+                f'values("{text}", "{description}")'
+        result=self.conn.execute(query)
+        return result.lastrowid
+    def delete(self,todo_id):
+        query = f'delete from {self.TABLENAME} where id={todo_id}'
+        result=self.conn.execute(query)
+        return result.rowcount
+    def update(self,todo_id,text,description):
+        query = f'update {self.TABLENAME} set Title="{text}", Description="{description}" where id={todo_id}'
+        result=self.conn.execute(query)
+        return result.rowcount
+    
