@@ -1,4 +1,5 @@
 import sqlite3
+from unittest import result
 class Schema:
     def __init__(self):
           self.conn=sqlite3.connect('todo.db')
@@ -51,4 +52,8 @@ class ToDoModel:
         query = f'update {self.TABLENAME} set Title="{text}", Description="{description}" where id={todo_id}'
         result=self.conn.execute(query)
         return result.rowcount
+    def get_all(self):
+        query = f'SELECT * FROM {self.TABLENAME}'
+        result = self.conn.execute(query)
+        return [dict(zip([key[0] for key in result.description], row)) for row in result.fetchall()]
     

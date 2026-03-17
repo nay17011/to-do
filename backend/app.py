@@ -12,7 +12,10 @@ def name():
     return 'My name is Nay'
 @app.route("/todo" ,methods=["POST"])
 def create_todo():
-    return ToDoService().create(request.get_json())
+    return jsonify(ToDoService().create(request.get_json()))
+@app.route('/todo', methods=['GET'])
+def get_todos():
+    return jsonify(ToDoService().get_all())
 
 if __name__=='__main__':
     Schema()
