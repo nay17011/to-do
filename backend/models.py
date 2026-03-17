@@ -2,6 +2,7 @@ import sqlite3
 class Schema:
     def __init__(self):
           self.conn=sqlite3.connect('todo.db')
+          self.conn.execute("PRAGMA journal_mode=WAL")
           self.create_user_table()
           self.create_todo_table()
 
@@ -35,6 +36,7 @@ class ToDoModel:
     TABLENAME = "Todo"
     def __init__(self):
         self.conn=sqlite3.connect('todo.db')
+        self.conn.execute("PRAGMA journal_mode=WAL")
     def create(self,text,description):
         query = f'insert into {self.TABLENAME} '\
                 f'(Title, Description) '\
